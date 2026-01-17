@@ -1,3 +1,8 @@
 export default defineBackground(() => {
-	console.log("Hello background!", { id: browser.runtime.id })
+	// Toggle panel when extension icon is clicked
+	browser.action.onClicked.addListener(async tab => {
+		if (tab.id) {
+			await browser.tabs.sendMessage(tab.id, { type: "toggle-panel" })
+		}
+	})
 })
