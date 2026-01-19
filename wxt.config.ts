@@ -10,6 +10,15 @@ export default defineConfig({
 		action: {
 			default_title: "Toggle Page Outline",
 		},
+		commands: {
+			_execute_action: {
+				suggested_key: {
+					default: "Ctrl+Shift+O",
+					mac: "Command+Shift+O",
+				},
+				description: "Toggle Page Outline",
+			},
+		},
 	},
 	modules: ["@wxt-dev/module-react"],
 	vite: () => ({

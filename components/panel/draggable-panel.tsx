@@ -1,4 +1,5 @@
 import { OutlineTree } from "@/components/outline/outline-tree"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import { useContentStore } from "@/store/content-store"
 import { useExpandStore } from "@/store/expand-store"
@@ -78,9 +79,9 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 			}}
 		>
 			<PanelHeader />
-			<div className="flex-1 overflow-auto">
+			<ScrollArea className="flex-1">
 				<OutlineTree tree={tree} />
-			</div>
+			</ScrollArea>
 		</div>
 	)
 }
