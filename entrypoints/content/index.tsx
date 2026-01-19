@@ -3,40 +3,51 @@ import ReactDOM from "react-dom/client"
 import { App } from "./App"
 import styles from "./styles/globals.css?inline"
 
+console.log("Content script loaded")
+
 export default defineContentScript({
 	matches: ["<all_urls>"],
 	cssInjectionMode: "ui",
 
 	async main(ctx) {
-		// Create shadow DOM UI
-		const ui = await createShadowRootUi(ctx, {
-			name: "page-outline",
-			position: "inline",
-			anchor: "body",
-			append: "last",
-			onMount: (container, shadow) => {
-				// Inject styles
-				const styleEl = document.createElement("style")
-				styleEl.textContent = styles
-				shadow.appendChild(styleEl)
+		let ui: Awaited<ReturnType<typeof createIntegratedUi>> | null = null
 
-				// Create React root
-				const host = shadow.host as HTMLElement
-				const root = ReactDOM.createRoot(container)
-				root.render(<App host={host} />)
+		// 延迟初始化 UI
+		const initUI = async () => {
+			console.log("Initializing UI...")
+			if (ui) return
 
-				return { root, host }
-			},
-			onRemove: elements => {
-				elements?.root.unmount()
-			},
-		})
+			ui = await createIntegratedUi(ctx, {
+				position: "inline",
+				anchor: "body",
+				append: "last",
+				onMount: container => {
+					// 注入样式到容器
+					const styleEl = document.createElement("style")
+					styleEl.textContent = styles
+					container.appendChild(styleEl)
 
-		ui.mount()
+					// 创建 React 根容器
+					const rootContainer = document.createElement("div")
+					container.appendChild(rootContainer)
 
-		// Listen for toggle message from background
-		browser.runtime.onMessage.addListener(message => {
+					const root = ReactDOM.createRoot(rootContainer)
+					root.render(<App host={container} />)
+
+					return { root, host: container }
+				},
+				onRemove: elements => {
+					elements?.root.unmount()
+				},
+			})
+
+			ui.mount()
+		}
+
+		// 点击菜单按钮后才初始化
+		browser.runtime.onMessage.addListener(async message => {
 			if (message.type === "toggle-panel") {
+				await initUI()
 				usePanelStore.getState().toggle()
 			}
 		})
