@@ -21,10 +21,18 @@ import {
 } from "lucide-react"
 
 export function PanelHeader() {
-	const { startDrag, close } = usePanelStore()
-	const { title, refresh, zoomLevel, setZoomLevel, tree } = useContentStore()
-	const { theme, setTheme } = useThemeStore()
-	const { expandAll, collapseAll, expandedNodes } = useExpandStore()
+	const startDrag = usePanelStore(s => s.startDrag)
+	const close = usePanelStore(s => s.close)
+	const title = useContentStore(s => s.title)
+	const refresh = useContentStore(s => s.refresh)
+	const zoomLevel = useContentStore(s => s.zoomLevel)
+	const setZoomLevel = useContentStore(s => s.setZoomLevel)
+	const tree = useContentStore(s => s.tree)
+	const theme = useThemeStore(s => s.theme)
+	const setTheme = useThemeStore(s => s.setTheme)
+	const expandAll = useExpandStore(s => s.expandAll)
+	const collapseAll = useExpandStore(s => s.collapseAll)
+	const expandedNodes = useExpandStore(s => s.expandedNodes)
 
 	const handleMouseDown = (e: React.MouseEvent) => {
 		startDrag(e.nativeEvent)

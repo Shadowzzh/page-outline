@@ -13,6 +13,8 @@ export class DragController {
 	private startPanelPosition: Position = { x: 0, y: 0 }
 	private panelSize: Size = PANEL_CONFIG.DEFAULT_SIZE
 	private callback: DragCallback
+	private rafId: number | null = null
+	private pendingDelta: Position | null = null
 
 	constructor(callback: DragCallback) {
 		this.callback = callback
@@ -45,16 +47,26 @@ export class DragController {
 	private handleMouseMove(event: MouseEvent): void {
 		if (!this.isDragging) return
 
-		const deltaX = event.clientX - this.startPosition.x
-		const deltaY = event.clientY - this.startPosition.y
-
-		const newPosition: Position = {
-			x: this.startPanelPosition.x + deltaX,
-			y: this.startPanelPosition.y + deltaY,
+		this.pendingDelta = {
+			x: event.clientX - this.startPosition.x,
+			y: event.clientY - this.startPosition.y,
 		}
 
-		const clampedPosition = clampToViewport(newPosition, this.panelSize)
-		this.callback(clampedPosition)
+		if (this.rafId === null) {
+			this.rafId = requestAnimationFrame(() => {
+				if (this.pendingDelta) {
+					const position = clampToViewport(
+						{
+							x: this.startPanelPosition.x + this.pendingDelta.x,
+							y: this.startPanelPosition.y + this.pendingDelta.y,
+						},
+						this.panelSize
+					)
+					this.callback(position)
+				}
+				this.rafId = null
+			})
+		}
 	}
 
 	/**
@@ -71,5 +83,10 @@ export class DragController {
 	 */
 	destroy(): void {
 		this.handleMouseUp()
+		if (this.rafId !== null) {
+			cancelAnimationFrame(this.rafId)
+			this.rafId = null
+		}
+		this.pendingDelta = null
 	}
 }

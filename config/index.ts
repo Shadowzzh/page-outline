@@ -1,4 +1,4 @@
-import type { Size, Position, Theme } from "@/types"
+import type { Position, Size, Theme } from "@/types"
 
 /** Panel 默认配置 */
 export const PANEL_CONFIG = {
