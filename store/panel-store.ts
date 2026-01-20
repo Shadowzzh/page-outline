@@ -1,6 +1,6 @@
+import { PANEL_CONFIG } from "@/config"
 import { DragController } from "@/core/panel/drag-controller"
 import { ViewportAdapter } from "@/core/panel/viewport-adapter"
-import { PANEL_CONFIG } from "@/config"
 import { getPanelState, setPanelState } from "@/lib/browser/storage"
 import { clampToViewport } from "@/lib/browser/viewport"
 import type { Position, Size } from "@/types"

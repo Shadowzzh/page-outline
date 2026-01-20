@@ -17,7 +17,8 @@ interface TreeNodeProps {
 
 export function TreeNode({ node, depth = 0 }: TreeNodeProps) {
 	const activeNodeId = useScrollStore(s => s.activeNodeId)
-	const { isExpanded, toggleNode } = useExpandStore()
+	const isExpanded = useExpandStore(s => s.isExpanded)
+	const toggleNode = useExpandStore(s => s.toggleNode)
 
 	const isActive = activeNodeId === node.id
 	const hasChildren = node.children.length > 0

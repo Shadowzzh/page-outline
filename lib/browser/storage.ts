@@ -27,7 +27,9 @@ export async function setPanelState(state: PanelState): Promise<void> {
 export async function getTheme(): Promise<typeof STORAGE_DEFAULTS.THEME> {
 	try {
 		const result = await browser.storage.local.get(STORAGE_KEYS.THEME)
-		const theme = result[STORAGE_KEYS.THEME] as typeof STORAGE_DEFAULTS.THEME | undefined
+		const theme = result[STORAGE_KEYS.THEME] as
+			| typeof STORAGE_DEFAULTS.THEME
+			| undefined
 		return theme ?? STORAGE_DEFAULTS.THEME
 	} catch {
 		return STORAGE_DEFAULTS.THEME
@@ -37,7 +39,9 @@ export async function getTheme(): Promise<typeof STORAGE_DEFAULTS.THEME> {
 /**
  * Save theme to storage
  */
-export async function setTheme(theme: typeof STORAGE_DEFAULTS.THEME): Promise<void> {
+export async function setTheme(
+	theme: typeof STORAGE_DEFAULTS.THEME
+): Promise<void> {
 	await browser.storage.local.set({ [STORAGE_KEYS.THEME]: theme })
 }
 
