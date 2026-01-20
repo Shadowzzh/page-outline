@@ -1,3 +1,4 @@
+import { PANEL_CONFIG } from "@/config"
 import { clampToViewport } from "@/lib/browser/viewport"
 import type { Position, Size } from "@/types"
 
@@ -10,7 +11,7 @@ export class DragController {
 	private isDragging = false
 	private startPosition: Position = { x: 0, y: 0 }
 	private startPanelPosition: Position = { x: 0, y: 0 }
-	private panelSize: Size = { width: 300, height: 400 }
+	private panelSize: Size = PANEL_CONFIG.DEFAULT_SIZE
 	private callback: DragCallback
 
 	constructor(callback: DragCallback) {

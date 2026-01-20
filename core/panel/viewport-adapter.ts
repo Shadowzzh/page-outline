@@ -1,3 +1,4 @@
+import { PANEL_CONFIG } from "@/config"
 import {
 	clampToViewport,
 	subscribeViewportChange,
@@ -12,7 +13,7 @@ export type PositionCallback = (position: Position) => void
 export class ViewportAdapter {
 	private unsubscribe: (() => void) | null = null
 	private currentPosition: Position = { x: 0, y: 0 }
-	private panelSize: Size = { width: 300, height: 400 }
+	private panelSize: Size = PANEL_CONFIG.DEFAULT_SIZE
 	private callback: PositionCallback
 
 	constructor(callback: PositionCallback) {

@@ -1,11 +1,5 @@
-import type { PanelState, Theme } from "@/types"
-
-const STORAGE_KEYS = {
-	PANEL_STATE: "page-outline-panel",
-	THEME: "page-outline-theme",
-	EXPANDED_NODES: "page-outline-expanded",
-	ZOOM_LEVEL: "page-outline-zoom",
-} as const
+import { STORAGE_DEFAULTS, STORAGE_KEYS } from "@/config"
+import type { PanelState } from "@/types"
 
 /**
  * Get panel state from storage
@@ -30,20 +24,20 @@ export async function setPanelState(state: PanelState): Promise<void> {
 /**
  * Get theme from storage
  */
-export async function getTheme(): Promise<Theme> {
+export async function getTheme(): Promise<typeof STORAGE_DEFAULTS.THEME> {
 	try {
 		const result = await browser.storage.local.get(STORAGE_KEYS.THEME)
-		const theme = result[STORAGE_KEYS.THEME] as Theme | undefined
-		return theme || "system"
+		const theme = result[STORAGE_KEYS.THEME] as typeof STORAGE_DEFAULTS.THEME | undefined
+		return theme ?? STORAGE_DEFAULTS.THEME
 	} catch {
-		return "system"
+		return STORAGE_DEFAULTS.THEME
 	}
 }
 
 /**
  * Save theme to storage
  */
-export async function setTheme(theme: Theme): Promise<void> {
+export async function setTheme(theme: typeof STORAGE_DEFAULTS.THEME): Promise<void> {
 	await browser.storage.local.set({ [STORAGE_KEYS.THEME]: theme })
 }
 
@@ -74,9 +68,9 @@ export async function getZoomLevel(): Promise<number> {
 	try {
 		const result = await browser.storage.local.get(STORAGE_KEYS.ZOOM_LEVEL)
 		const level = result[STORAGE_KEYS.ZOOM_LEVEL] as number | undefined
-		return level || 6
+		return level ?? STORAGE_DEFAULTS.ZOOM_LEVEL
 	} catch {
-		return 6
+		return STORAGE_DEFAULTS.ZOOM_LEVEL
 	}
 }
 
