@@ -4,21 +4,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
-	* {
-		/* @apply border-border outline-ring/50; */
-	}
-
-	body {
-		/* @apply bg-background text-foreground;
-    @apply text-primary/70; */
-		/* font-family: var(--font-mono); */
+	html {
+		font-size: 14px;
 	}
 }
 
 :root {
-	@apply md:text-[13.5px] text-[12.5px];
-	@apply text-neutral-700 dark:text-neutral-50;
-
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);
 	--card: oklch(1 0 0);

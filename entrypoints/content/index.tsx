@@ -1,31 +1,32 @@
 import { usePanelStore } from "@/store/panel-store"
 import ReactDOM from "react-dom/client"
 import { App } from "./App"
-import styles from "./styles/globals.css?inline"
+import rawStyles from "./styles/globals.css?inline"
+import { processCssForShadowDom } from "./utils/shadow-dom-css"
 
-console.log("Content script loaded")
+// 处理后的样式
+const styles = processCssForShadowDom(rawStyles)
 
 export default defineContentScript({
 	matches: ["<all_urls>"],
-	cssInjectionMode: "ui",
+	cssInjectionMode: "manual",
 
 	async main(ctx) {
-		let ui: Awaited<ReturnType<typeof createIntegratedUi>> | null = null
+		let ui: Awaited<ReturnType<typeof createShadowRootUi>> | null = null
 
 		// 延迟初始化 UI
 		const initUI = async () => {
-			console.log("Initializing UI...")
 			if (ui) return
 
-			ui = await createIntegratedUi(ctx, {
+			ui = await createShadowRootUi(ctx, {
+				name: "page-outline",
 				position: "inline",
 				anchor: "body",
-				append: "last",
-				onMount: container => {
-					// 注入样式到容器
+				onMount: (container, shadow) => {
+					// 注入处理后的样式到 Shadow DOM
 					const styleEl = document.createElement("style")
 					styleEl.textContent = styles
-					container.appendChild(styleEl)
+					shadow.appendChild(styleEl)
 
 					// 创建 React 根容器
 					const rootContainer = document.createElement("div")
