@@ -1,12 +1,12 @@
 import { DragController } from "@/core/panel/drag-controller"
 import { ViewportAdapter } from "@/core/panel/viewport-adapter"
+import { PANEL_CONFIG } from "@/config"
 import { getPanelState, setPanelState } from "@/lib/browser/storage"
 import { clampToViewport } from "@/lib/browser/viewport"
 import type { Position, Size } from "@/types"
 import { create } from "zustand"
 
-const DEFAULT_POSITION: Position = { x: 20, y: 100 }
-const DEFAULT_SIZE: Size = { width: 280, height: 400 }
+const { DEFAULT_POSITION, DEFAULT_SIZE } = PANEL_CONFIG
 
 interface PanelState {
 	position: Position
@@ -45,9 +45,7 @@ export const usePanelStore = create<PanelState & PanelActions>((set, get) => ({
 		position = clampToViewport(position, size)
 
 		// Create controllers
-		const dragController = new DragController(pos => {
-			get().setPosition(pos)
-		})
+		const dragController = new DragController(pos => get().setPosition(pos))
 		dragController.setPanelSize(size)
 
 		const viewportAdapter = new ViewportAdapter(pos => {
