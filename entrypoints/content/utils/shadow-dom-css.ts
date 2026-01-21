@@ -30,10 +30,8 @@ export function processCssForShadowDom(css: string): string {
 	// 3. 替换选择器
 	const processedCss = css
 		.replace(/:root(?![a-zA-Z-])/g, ":host") // :root → :host
-		.replace(
-			/(?<![:\w])\.dark(?![a-zA-Z-])/g,
-			":host(.dark)"
-		) /* .dark → :host(.dark) */
+		.replace(/(?<![:\w])\.dark(?![a-zA-Z-])/g, ":host(.dark)") // .dark → :host(.dark)
+		.replace(/(\d*\.?\d+)rem\b/g, "$1em") // rem → em (Shadow DOM 隔离)
 
 	return fallbackCss + processedCss
 }

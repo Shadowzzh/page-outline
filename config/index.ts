@@ -6,7 +6,7 @@ export const PANEL_CONFIG = {
 	DEFAULT_POSITION: { x: 20, y: 100 } as Position,
 
 	/** 默认面板尺寸 */
-	DEFAULT_SIZE: { width: 320, height: 480 } as Size,
+	DEFAULT_SIZE: { width: 280, height: 480 } as Size,
 } as const
 
 /** Storage 默认值 */

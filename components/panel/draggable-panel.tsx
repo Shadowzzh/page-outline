@@ -68,7 +68,7 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	return (
 		<div
 			className={cn(
-				"fixed z-[2147483647] bg-background text-foreground border border-border rounded-lg shadow-lg",
+				"fixed z-2147483647 bg-background border-border rounded-xl",
 				"flex flex-col overflow-hidden"
 			)}
 			style={{
@@ -76,10 +76,14 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 				top: `${position.y}px`,
 				width: `${size.width}px`,
 				height: `${size.height}px`,
+				boxShadow:
+					resolvedTheme === "dark"
+						? "rgba(0, 0, 0, 0.5) 0px 0px 0px 4px"
+						: "rgba(0, 0, 0, 0.1) 0px 0px 0px 4px",
 			}}
 		>
 			<PanelHeader />
-			<ScrollArea className="flex-1">
+			<ScrollArea className="flex-1 h-[calc(100%-2.5em)] -mr-2">
 				<OutlineTree tree={tree} />
 			</ScrollArea>
 		</div>
