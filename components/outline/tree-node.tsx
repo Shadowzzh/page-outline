@@ -35,7 +35,7 @@ export function TreeNode({ node, depth = 0 }: TreeNodeProps) {
 					className={cn(
 						"flex items-center gap-1 px-2 py-1 rounded cursor-pointer text-sm transition-colors",
 						"hover:bg-accent",
-						isActive && "bg-accent text-accent-foreground font-medium"
+						isActive && "bg-accent font-medium"
 					)}
 					style={{ paddingLeft: `${depth * 12 + 8}px` }}
 					onClick={handleClick}

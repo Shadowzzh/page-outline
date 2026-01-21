@@ -15,7 +15,7 @@ export function OutlineTree({ tree }: OutlineTreeProps) {
 	}
 
 	return (
-		<div className="py-2">
+		<div className="">
 			{tree.map(node => (
 				<TreeNode key={node.id} node={node} />
 			))}
