@@ -139,7 +139,7 @@ export function PanelHeader() {
 					<TooltipTrigger asChild>
 						<Button
 							className="cursor-pointer"
-							variant="outline"
+							variant="ghost"
 							size="icon-sm"
 							onClick={close}
 						>
