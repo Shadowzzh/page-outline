@@ -4,7 +4,7 @@ import { TreeNode } from "./tree-node"
 interface FlattenedNode extends HeadingNode {
 	depth: number
 	parentId: string | null
-	ancestorIds: string[]  // 所有祖先节点的 ID，用于判断可见性
+	ancestorIds: string[] // 所有祖先节点的 ID，用于判断可见性
 }
 
 interface OutlineTreeProps {
@@ -29,7 +29,10 @@ function flattenTree(
 
 		if (node.children.length > 0) {
 			result.push(
-				...flattenTree(node.children, depth + 1, node.id, [...ancestorIds, node.id])
+				...flattenTree(node.children, depth + 1, node.id, [
+					...ancestorIds,
+					node.id,
+				])
 			)
 		}
 	}
