@@ -8,7 +8,7 @@ import { ChevronRight } from "lucide-react"
 interface TreeNodeProps {
 	node: HeadingNode
 	depth: number
-	ancestorIds: string[]  // 所有祖先节点的 ID
+	ancestorIds: string[] // 所有祖先节点的 ID
 }
 
 export function TreeNode({ node, depth, ancestorIds }: TreeNodeProps) {
@@ -41,10 +41,10 @@ export function TreeNode({ node, depth, ancestorIds }: TreeNodeProps) {
 		<div>
 			<div
 				className={cn(
-					"gap-1 px-2 h-9 rounded cursor-pointer text-sm transition-colors",
+					"gap-1 px-2 h-9 rounded-md cursor-pointer text-sm transition-colors",
 					"hover:bg-accent",
 					"flex items-center  ",
-					isActive && "bg-accent font-medium"
+					isActive && "bg-accent"
 				)}
 				style={{ paddingLeft: `${depth * 12 + 8}px` }}
 				onClick={handleClick}

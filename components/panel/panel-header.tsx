@@ -61,7 +61,7 @@ export function PanelHeader() {
 	return (
 		<TooltipProvider delayDuration={300}>
 			<div
-				className="flex items-center justify-between gap-1 px-2 min-h-10 cursor-move select-none"
+				className="flex items-center justify-between gap-1 px-2 pt-2 cursor-move select-none"
 				onMouseDown={handleMouseDown}
 			>
 				<GripVertical className="size-4 ml-1 text-muted-foreground" />
