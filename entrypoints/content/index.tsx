@@ -24,7 +24,7 @@ export default defineContentScript({
 				anchor: "body",
 				onMount: (container, shadow) => {
 					// 设置基准字体大小，使 em 单位有正确参考值
-					container.style.fontSize = "14px"
+					container.style.fontSize = "16px"
 					container.style.color = "#4b4b4b"
 
 					// 注入处理后的样式到 Shadow DOM
