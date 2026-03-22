@@ -67,8 +67,8 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	return (
 		<div
 			className={cn(
-				"fixed z-2147483647 rounded-lg",
-				"flex flex-col overflow-hidden",
+				"fixed z-2147483647",
+				"flex flex-col",
 				"bg-[#000000] text-[#a0a0a0] border border-[#333333]",
 				"font-mono",
 				"crt-panel"
@@ -81,7 +81,7 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 			}}
 		>
 			<PanelHeader />
-			<div className="flex-1 overflow-hidden">
+			<div className="flex-1 overflow-auto">
 				<div>
 					<OutlineTree tree={tree} />
 				</div>

@@ -19,11 +19,10 @@ export function PanelHeader() {
 	return (
 		<TooltipProvider delayDuration={300}>
 			<div
-				className="flex items-center justify-between gap-1 px-2 py-1.5 cursor-move select-none border-b border-dashed border-[#333333]"
+				className="flex items-center justify-between gap-1 px-2 cursor-move select-none border-b border-dashed border-[#333333]"
 				onMouseDown={handleMouseDown}
 			>
-				<GripVertical className="size-4 text-[#555555]" />
-
+				<div />
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<Button

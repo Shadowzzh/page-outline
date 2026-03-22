@@ -59,11 +59,12 @@ export function TreeNode({
 	return (
 		<div
 			className={cn(
-				"flex items-center h-5 px-2 cursor-pointer font-mono text-sm",
-				"hover:bg-[#ffffff] hover:text-[#000000]",
+				"flex items-center h-4.5 px-2 cursor-pointer font-mono",
+				"hover:bg-amber-900",
 				"transition-colors",
-				isActive && "bg-[#333333]"
+				isActive && "bg-amber-950 text-[#ffcc00]"
 			)}
+			style={{ textShadow: "0 0 1px #ffb300, 0 0 8px rgba(255, 179, 0, 0.4)" }}
 			onClick={handleClick}
 			onKeyDown={e => {
 				if (e.key === "Enter" || e.key === " ") {
@@ -71,24 +72,36 @@ export function TreeNode({
 				}
 			}}
 		>
-			<span className="text-[#555555] whitespace-pre">{prefix}</span>
-			{hasChildren ? (
-				<span
-					className="text-[#888888] cursor-pointer hover:text-[#ffffff]"
-					onClick={handleToggle}
-					onKeyDown={e => {
-						if (e.key === "Enter" || e.key === " ") {
-							e.stopPropagation()
-							toggleNode(node.id)
-						}
-					}}
-				>
-					{toggleIndicator}
+			{/* 标志部分：连接线 + 展开/折叠指示器 */}
+			<div className="flex items-center text-sm">
+				<span className="whitespace-pre" style={{ color: "#b39000" }}>
+					{prefix}
 				</span>
-			) : (
-				<span className="text-[#555555]">{toggleIndicator}</span>
-			)}
-			<span className="ml-1 truncate">{node.text}</span>
+				{hasChildren ? (
+					<span
+						className="cursor-pointer hover:text-[#ffcc00]"
+						style={{ color: "#b39000" }}
+						onClick={handleToggle}
+						onKeyDown={e => {
+							if (e.key === "Enter" || e.key === " ") {
+								e.stopPropagation()
+								toggleNode(node.id)
+							}
+						}}
+					>
+						{toggleIndicator}
+					</span>
+				) : (
+					<span style={{ color: "#b39000" }}>{toggleIndicator}</span>
+				)}
+			</div>
+			{/* 标题部分 */}
+			<div
+				className="ml-1 truncate text-xs hover:text-[#ffcc00]"
+				style={{ color: "#b39000" }}
+			>
+				{node.text}
+			</div>
 		</div>
 	)
 }
