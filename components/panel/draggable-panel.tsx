@@ -14,6 +14,8 @@ interface DraggablePanelProps {
 
 export function DraggablePanel({ host }: DraggablePanelProps) {
 	const isOpen = usePanelStore(s => s.isOpen)
+	const position = usePanelStore(s => s.position)
+	const size = usePanelStore(s => s.size)
 	const tree = useContentStore(s => s.tree)
 	const resolvedTheme = useThemeStore(s => s.resolvedTheme)
 
@@ -65,9 +67,18 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	return (
 		<div
 			className={cn(
-				"fixed z-2147483647 bg-background border-border rounded-xl",
-				"flex flex-col overflow-hidden"
+				"fixed z-2147483647 rounded-lg",
+				"flex flex-col overflow-hidden",
+				"bg-[#000000] text-[#a0a0a0] border border-[#333333]",
+				"font-mono",
+				"crt-panel"
 			)}
+			style={{
+				left: position.x,
+				top: position.y,
+				width: size.width,
+				height: size.height,
+			}}
 		>
 			<PanelHeader />
 			<div className="flex-1 overflow-hidden">
