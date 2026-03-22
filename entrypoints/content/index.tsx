@@ -49,7 +49,15 @@ export default defineContentScript({
 			ui.mount()
 		}
 
-		// 点击菜单按钮后才初始化
+		// Dev mode: auto-init and open panel after 300ms
+		if (import.meta.env.DEV) {
+			setTimeout(async () => {
+				await initUI()
+				usePanelStore.getState().open()
+			}, 300)
+		}
+
+		// 点击菜单按钮后切换面板
 		browser.runtime.onMessage.addListener(async message => {
 			if (message.type === "toggle-panel") {
 				await initUI()
