@@ -22,14 +22,13 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	// Use ref to track if component has been initialized
 	const initializedRef = useRef(false)
 
-	// Initialize on mount
+	// Initialize on mount (panel store is already initialized in content script)
 	useEffect(() => {
 		if (initializedRef.current) return
 		initializedRef.current = true
 
 		const initialize = async () => {
 			await Promise.all([
-				usePanelStore.getState().init(),
 				useThemeStore.getState().loadTheme(),
 				useContentStore.getState().loadZoomLevel(),
 				useExpandStore.getState().loadExpandedNodes(),
