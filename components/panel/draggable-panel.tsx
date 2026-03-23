@@ -22,14 +22,13 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	// Use ref to track if component has been initialized
 	const initializedRef = useRef(false)
 
-	// Initialize on mount
+	// Initialize on mount (panel store is already initialized in content script)
 	useEffect(() => {
 		if (initializedRef.current) return
 		initializedRef.current = true
 
 		const initialize = async () => {
 			await Promise.all([
-				usePanelStore.getState().init(),
 				useThemeStore.getState().loadTheme(),
 				useContentStore.getState().loadZoomLevel(),
 				useExpandStore.getState().loadExpandedNodes(),
@@ -67,9 +66,9 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	return (
 		<div
 			className={cn(
-				"fixed z-2147483647 rounded-lg",
-				"flex flex-col overflow-hidden",
-				"bg-[#000000] text-[#a0a0a0] border border-[#333333]",
+				"fixed z-2147483647",
+				"flex flex-col",
+				"bg-black/85 backdrop-blur-md text-[#a0a0a0] border border-[#333333]",
 				"font-mono",
 				"crt-panel"
 			)}
@@ -81,7 +80,7 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 			}}
 		>
 			<PanelHeader />
-			<div className="flex-1 overflow-hidden">
+			<div className="flex-1 overflow-auto">
 				<div>
 					<OutlineTree tree={tree} />
 				</div>

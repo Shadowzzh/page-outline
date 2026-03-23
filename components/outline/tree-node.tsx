@@ -59,11 +59,12 @@ export function TreeNode({
 	return (
 		<div
 			className={cn(
-				"flex items-center h-5 px-2 cursor-pointer font-mono text-sm",
-				"hover:bg-[#ffffff] hover:text-[#000000]",
+				"group flex items-center h-4.5 px-2 cursor-pointer font-mono",
+				"hover:bg-crt-bg-hover",
 				"transition-colors",
-				isActive && "bg-[#333333]"
+				isActive && "bg-crt-bg-active text-crt-active"
 			)}
+			style={{ textShadow: "0 0 1px #ffb300, 0 0 8px rgba(255, 179, 0, 0.4)" }}
 			onClick={handleClick}
 			onKeyDown={e => {
 				if (e.key === "Enter" || e.key === " ") {
@@ -71,24 +72,44 @@ export function TreeNode({
 				}
 			}}
 		>
-			<span className="text-[#555555] whitespace-pre">{prefix}</span>
-			{hasChildren ? (
-				<span
-					className="text-[#888888] cursor-pointer hover:text-[#ffffff]"
-					onClick={handleToggle}
-					onKeyDown={e => {
-						if (e.key === "Enter" || e.key === " ") {
-							e.stopPropagation()
-							toggleNode(node.id)
-						}
-					}}
-				>
-					{toggleIndicator}
-				</span>
-			) : (
-				<span className="text-[#555555]">{toggleIndicator}</span>
-			)}
-			<span className="ml-1 truncate">{node.text}</span>
+			{/* 标志部分：连接线 + 展开/折叠指示器 */}
+			<div
+				className={cn(
+					"flex items-center text-sm",
+					!isActive && "text-crt-dim",
+					isActive && "text-crt-active",
+					"group-hover:text-crt-hover"
+				)}
+			>
+				<span className="whitespace-pre">{prefix}</span>
+				{hasChildren ? (
+					<span
+						className="cursor-pointer"
+						onClick={handleToggle}
+						onKeyDown={e => {
+							if (e.key === "Enter" || e.key === " ") {
+								e.stopPropagation()
+								toggleNode(node.id)
+							}
+						}}
+					>
+						{toggleIndicator}
+					</span>
+				) : (
+					<span>{toggleIndicator}</span>
+				)}
+			</div>
+			{/* 标题部分 */}
+			<div
+				className={cn(
+					"ml-1 truncate text-xs",
+					!isActive && "text-crt-dim",
+					isActive && "text-crt-active",
+					"group-hover:text-crt-hover"
+				)}
+			>
+				{node.text}
+			</div>
 		</div>
 	)
 }

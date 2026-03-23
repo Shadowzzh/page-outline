@@ -14,6 +14,7 @@ interface PanelState {
 	isOpen: boolean
 	dragController: DragController | null
 	viewportAdapter: ViewportAdapter | null
+	initialized: boolean
 }
 
 interface PanelActions {
@@ -34,6 +35,7 @@ export const usePanelStore = create<PanelState & PanelActions>((set, get) => ({
 	isOpen: false,
 	dragController: null,
 	viewportAdapter: null,
+	initialized: false,
 
 	init: async () => {
 		// Load saved state
@@ -54,7 +56,7 @@ export const usePanelStore = create<PanelState & PanelActions>((set, get) => ({
 		})
 		viewportAdapter.start(position, size)
 
-		set({ position, size, dragController, viewportAdapter })
+		set({ position, size, dragController, viewportAdapter, initialized: true })
 	},
 
 	setPosition: position => {
@@ -107,7 +109,8 @@ export const usePanelStore = create<PanelState & PanelActions>((set, get) => ({
 	},
 
 	saveState: () => {
-		const { position, size, isOpen } = get()
+		const { position, size, isOpen, initialized } = get()
+		if (!initialized) return
 		setPanelState({ position, size, isOpen })
 	},
 }))
