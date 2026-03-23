@@ -69,7 +69,7 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 			className={cn(
 				"fixed z-2147483647",
 				"flex flex-col",
-				"bg-[#000000] text-[#a0a0a0] border border-[#333333]",
+				"bg-black/85 backdrop-blur-md text-[#a0a0a0] border border-[#333333]",
 				"font-mono",
 				"crt-panel"
 			)}

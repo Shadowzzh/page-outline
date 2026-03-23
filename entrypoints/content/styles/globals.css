@@ -195,6 +195,13 @@
 }
 
 @theme inline {
+	/* CRT 风格颜色 */
+	--color-crt-dim: #c49a00;
+	--color-crt-active: #e69500;
+	--color-crt-hover: #ffcc00;
+	--color-crt-bg-hover: #d97706;
+	--color-crt-bg-active: #78350f;
+
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-card: var(--card);
