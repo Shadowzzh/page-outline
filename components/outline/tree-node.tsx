@@ -60,6 +60,7 @@ export function TreeNode({
 
 	return (
 		<div
+			data-node-id={node.id}
 			className={cn(
 				"group flex items-center h-4.5 px-2 cursor-pointer font-mono",
 				"hover:bg-crt-bg-hover",

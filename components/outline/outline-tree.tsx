@@ -1,5 +1,10 @@
+import { useScrollStore } from "@/store/scroll-store"
 import type { HeadingNode } from "@/types"
+import { useEffect, useRef } from "react"
 import { TreeNode } from "./tree-node"
+
+// Wait for DOM updates before scrolling
+const SCROLL_DELAY = 150
 
 interface FlattenedNode extends HeadingNode {
 	depth: number
@@ -11,6 +16,7 @@ interface FlattenedNode extends HeadingNode {
 
 interface OutlineTreeProps {
 	tree: HeadingNode[]
+	scrollContainerRef: React.RefObject<HTMLDivElement | null>
 }
 
 function flattenTree(
@@ -51,7 +57,46 @@ function flattenTree(
 	return result
 }
 
-export function OutlineTree({ tree }: OutlineTreeProps) {
+export function OutlineTree({ tree, scrollContainerRef }: OutlineTreeProps) {
+	const activeNodeId = useScrollStore(s => s.activeNodeId)
+	const containerRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		if (!activeNodeId || !containerRef.current || !scrollContainerRef.current)
+			return
+
+		const timer = setTimeout(() => {
+			const element = containerRef.current?.querySelector(
+				`[data-node-id="${activeNodeId}"]`
+			)
+			const scrollContainer = scrollContainerRef.current
+
+			if (element && scrollContainer) {
+				const elementRect = element.getBoundingClientRect()
+				const containerRect = scrollContainer.getBoundingClientRect()
+
+				const isVisible =
+					elementRect.top >= containerRect.top &&
+					elementRect.bottom <= containerRect.bottom
+
+				if (!isVisible) {
+					const scrollTop =
+						(element as HTMLElement).offsetTop -
+						scrollContainer.offsetTop -
+						scrollContainer.clientHeight / 2 +
+						(element as HTMLElement).clientHeight / 2
+
+					scrollContainer.scrollTo({
+						top: scrollTop,
+						behavior: "smooth",
+					})
+				}
+			}
+		}, SCROLL_DELAY)
+
+		return () => clearTimeout(timer)
+	}, [activeNodeId, scrollContainerRef])
+
 	if (tree.length === 0) {
 		return (
 			<div className="flex items-center justify-center h-full text-muted-foreground text-sm">
@@ -63,7 +108,7 @@ export function OutlineTree({ tree }: OutlineTreeProps) {
 	const flattenedNodes = flattenTree(tree)
 
 	return (
-		<div className="">
+		<div ref={containerRef} className="">
 			{flattenedNodes.map(node => (
 				<TreeNode
 					key={node.id}

@@ -21,6 +21,7 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 
 	// Use ref to track if component has been initialized
 	const initializedRef = useRef(false)
+	const scrollContainerRef = useRef<HTMLDivElement>(null)
 
 	// Initialize on mount (panel store is already initialized in content script)
 	useEffect(() => {
@@ -48,8 +49,8 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	useEffect(() => {
 		if (tree.length > 0) {
 			useScrollStore.getState().startTracking(tree)
-			// Auto-expand all on first load
-			useExpandStore.getState().expandAll(tree)
+			// Auto-expand to level 2 on first load
+			useExpandStore.getState().expandToLevel(tree, 2)
 		}
 	}, [tree])
 
@@ -80,9 +81,9 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 			}}
 		>
 			<PanelHeader />
-			<div className="flex-1 overflow-auto">
+			<div ref={scrollContainerRef} className="flex-1 overflow-auto">
 				<div>
-					<OutlineTree tree={tree} />
+					<OutlineTree tree={tree} scrollContainerRef={scrollContainerRef} />
 				</div>
 			</div>
 		</div>
