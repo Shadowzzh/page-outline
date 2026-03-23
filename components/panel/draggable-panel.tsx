@@ -49,8 +49,8 @@ export function DraggablePanel({ host }: DraggablePanelProps) {
 	useEffect(() => {
 		if (tree.length > 0) {
 			useScrollStore.getState().startTracking(tree)
-			// Auto-expand to level 2 on first load
-			useExpandStore.getState().expandToLevel(tree, 2)
+			// Auto-expand all on first load
+			useExpandStore.getState().expandAll(tree)
 		}
 	}, [tree])
 

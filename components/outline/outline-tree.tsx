@@ -80,11 +80,21 @@ export function OutlineTree({ tree, scrollContainerRef }: OutlineTreeProps) {
 					elementRect.bottom <= containerRect.bottom
 
 				if (!isVisible) {
-					const scrollTop =
-						(element as HTMLElement).offsetTop -
-						scrollContainer.offsetTop -
-						scrollContainer.clientHeight / 2 +
-						(element as HTMLElement).clientHeight / 2
+					// 计算元素相对于滚动容器的位置
+					let elementTop = 0
+					let currentElement = element as HTMLElement
+					while (currentElement && currentElement !== scrollContainer) {
+						elementTop += currentElement.offsetTop
+						currentElement = currentElement.offsetParent as HTMLElement
+					}
+
+					const containerHeight = scrollContainer.clientHeight
+					const elementHeight = (element as HTMLElement).clientHeight
+
+					const scrollTop = Math.max(
+						0,
+						elementTop - containerHeight / 2 + elementHeight / 2
+					)
 
 					scrollContainer.scrollTo({
 						top: scrollTop,
