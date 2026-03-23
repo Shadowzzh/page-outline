@@ -78,8 +78,9 @@ export class ScrollTracker {
 	 * Determine and emit the active node (first visible in document order)
 	 */
 	private updateActiveNode(): void {
-		const activeId =
-			this.nodeOrder.find(id => this.visibleNodes.has(id)) || null
-		this.callback(activeId)
+		const activeId = this.nodeOrder.find(id => this.visibleNodes.has(id))
+		if (activeId) {
+			this.callback(activeId)
+		}
 	}
 }

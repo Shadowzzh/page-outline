@@ -31,6 +31,7 @@ export function TreeNode({
 	ancestorIsLast,
 }: TreeNodeProps) {
 	const activeNodeId = useScrollStore(s => s.activeNodeId)
+	const setActiveNode = useScrollStore(s => s.setActiveNode)
 	const expandedNodes = useExpandStore(s => s.expandedNodes)
 	const toggleNode = useExpandStore(s => s.toggleNode)
 
@@ -45,6 +46,7 @@ export function TreeNode({
 	}
 
 	const handleClick = () => {
+		setActiveNode(node.id)
 		scrollToElement(node.element)
 	}
 

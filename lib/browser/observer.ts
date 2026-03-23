@@ -17,7 +17,7 @@ export function createHeadingObserver(
 ): IntersectionObserver {
 	const defaultOptions: ObserverOptions = {
 		root: null,
-		rootMargin: "-10% 0px -80% 0px",
+		rootMargin: "0px 0px -90% 0px",
 		threshold: 0,
 	}
 
