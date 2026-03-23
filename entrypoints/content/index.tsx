@@ -18,6 +18,9 @@ export default defineContentScript({
 		const initUI = async () => {
 			if (ui) return
 
+			// 先初始化 store（同步加载存储）
+			await usePanelStore.getState().init()
+
 			ui = await createShadowRootUi(ctx, {
 				name: "page-outline",
 				position: "inline",
