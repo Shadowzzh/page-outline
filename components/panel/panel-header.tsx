@@ -13,7 +13,7 @@ export function PanelHeader() {
 	return (
 		<TooltipProvider delayDuration={300}>
 			<div
-				className="flex items-center justify-between gap-1 cursor-move select-none border-b border-dashed border-[#333333]"
+				className="flex items-center justify-between gap-1 cursor-move select-none"
 				onMouseDown={handleMouseDown}
 			>
 				<div />

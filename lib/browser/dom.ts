@@ -26,11 +26,11 @@ export function generateId(element: HTMLElement, index: number): string {
 }
 
 /**
- * Scroll an element into view smoothly
+ * Scroll an element into view instantly
  */
 export function scrollToElement(element: HTMLElement): void {
 	element.scrollIntoView({
-		behavior: "smooth",
+		behavior: "instant",
 		block: "start",
 	})
 }
